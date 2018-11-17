@@ -1,104 +1,51 @@
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.Test;
-
+import org.testng.annotations.*;
 import java.io.File;
 import java.util.NoSuchElementException;
 
-public class Testabc{
 
-   // @FindBy(xpath = "//a[@href='https://my.rozetka.com.ua/ua/signin/']")
-   // private WebElement signInLink;
+public class Testabc extends TestBase {
 
-    WebDriver driver;
-
-    @Test
-    public void start(){
-        ChromeDriverService serviceChrome = new ChromeDriverService.Builder()
-                .usingDriverExecutable(new File("C:/!!Lektorium/lektroium3/src/main/resources/chromedriver.exe"))
-                .usingAnyFreePort()
-                .build();
-        ChromeOptions optionsChrome = new ChromeOptions();
-        optionsChrome.addArguments("start-maximized");
-        driver = new ChromeDriver(serviceChrome, optionsChrome);
-        driver.get("https://www.udacity.com/");
-        driver.manage().window().maximize();
-        WebDriverWait wait = new WebDriverWait(driver, 50);
-
-       /* WebElement popAdvet = driver.findElement(By.xpath("//div[@class='modal-close']"));
-        wait.until(ExpectedConditions.elementToBeClickable(popAdvet));
-        popAdvet.click();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException | NoSuchElementException e) {
-            System.out.println("No such element");
-            e.printStackTrace();
-        } */
+     // @FindBy(xpath = "//a[@href='https://my.rozetka.com.ua/ua/signin/']")
+     // private WebElement signInLink;
 
 
-        WebElement signElement = driver.findElement(By.xpath("(//a[@title='Sign In'])[2]"));
-        wait.until(ExpectedConditions.elementToBeClickable(signElement));
-        signElement.click();
+     @Test
+     public void compare () {
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException | NoSuchElementException e) {
-            System.out.println("No such element");
-            e.printStackTrace();
-        }
+         wait.until(ExpectedConditions.urlToBe("https://classroom.udacity.com/settings/personal-info"));
+         WebElement nameField = driver.findElement(By.xpath("//input[@placeholder='First Name']"));
+         wait.until(ExpectedConditions.visibilityOf(nameField));
+         String valueNameField = nameField.getAttribute("value");
+         String expectedName = "Mike";
+         Assert.assertEquals(valueNameField, expectedName);
 
-        WebElement emailElement = driver.findElement(By.xpath("//input[@type='email']"));
-        wait.until(ExpectedConditions.elementToBeClickable(emailElement));
-        emailElement.clear();
-        emailElement.sendKeys("testmailforus9@gmail.com");
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException | NoSuchElementException e) {
-            System.out.println("No such element");
-            e.printStackTrace();
-        }
+         try {
+             Thread.sleep(2000);
+         } catch (InterruptedException | NoSuchElementException e) {
+             System.out.println("No such element");
+             e.printStackTrace();
+         }
 
-        WebElement passwordElement = driver.findElement(By.xpath("//input[@type='password']"));
-        wait.until(ExpectedConditions.elementToBeClickable(passwordElement));
-        passwordElement.clear();
-        passwordElement.sendKeys("trash1010");
+         WebElement lastField = driver.findElement(By.xpath("//input[@placeholder='Last Name']"));
+         String valueLastFiield = lastField.getAttribute("value");
+         Assert.assertEquals(valueLastFiield, "Lebowski");
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException | NoSuchElementException e) {
-            System.out.println("No such element");
-            e.printStackTrace();
-        }
+         WebElement emailField = driver.findElement(By.xpath("//input[@placeholder='Email Address']"));
+         String valueEmailField = emailField.getAttribute("value");
+         Assert.assertEquals(valueEmailField, "testmailforus9@gmail.com");
 
-        WebElement submitElement = driver.findElement(By.xpath("//form/button[text()='Sign In']"));
-        wait.until(ExpectedConditions.elementToBeClickable(submitElement));
-        submitElement.click();
+     }
+ }
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException | NoSuchElementException e) {
-            System.out.println("No such element");
-            e.printStackTrace();
-        }
 
-       /* WebElement assertElement = driver.findElement(By.xpath("(//*[contains(@href,'www.udacity.com')])[2]"));
-        wait.until(ExpectedConditions.elementToBeClickable(assertElement));
-        Assert.assertTrue(assertElement.isDisplayed());
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException | NoSuchElementException e) {
-            System.out.println("No such element!");
-            e.printStackTrace();
-        }*/
-        driver.quit();
-    }
-}
+
+
